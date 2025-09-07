@@ -1,0 +1,23 @@
+function dxdt = nonlinsim(t, x, Mphi, Mdelta, vdotfunc, M, K0, K2, C1)
+
+u = [Mphi;...
+     Mdelta;...
+     vdotfunc];
+
+Anonlin = [x(3);...
+           x(4);...
+           (-inv(M)*K0 - inv(M)*K2*x(5)^2)*[x(1); x(2)]-inv(M)*C1*x(5)*[x(3); x(4)];
+           0];
+       
+Bnonlin = [0;...
+           0;...
+           inv(M)*u(1:2,1);...
+           u(3)];
+
+dxdt(1,1) = Anonlin(1) + Bnonlin(1);
+dxdt(2,1) = Anonlin(2) + Bnonlin(2);
+dxdt(3,1) = Anonlin(3) + Bnonlin(3);
+dxdt(4,1) = Anonlin(4) + Bnonlin(4);
+dxdt(5,1) = Anonlin(5) + Bnonlin(5);
+
+end
